@@ -1,77 +1,176 @@
+/* Estilo geral */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f9f9f9;
+  color: #333;
   text-align: center;
+  margin: 0;
+  padding: 20px;
 }
 
-.input-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+h1 {
+  font-size: 2rem;
+  color: #2c3e50;
   margin-bottom: 20px;
 }
 
+/* Container de entrada */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
 textarea {
-  width: 200px;
-  height: 50px;
+  width: 300px;
+  height: 80px;
   padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #28a745;
+  outline: none;
 }
 
 button {
-  padding: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
   background-color: #28a745;
   color: white;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #218838;
 }
 
+button:active {
+  background-color: #1e7e34;
+}
+
+/* Container principal */
 .container {
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap; /* Permite que os cards se ajustem em telas menores */
 }
 
 .tick {
-  width: 30%;
+  width: calc(30% - 20px);
   min-height: 300px;
-  background: #e3e3e3;
+  background: #ffffff;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tick:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tick h2 {
-  text-align: center;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
 }
 
 .note-list {
   min-height: 200px;
   padding: 10px;
+  overflow-y: auto; /* Adiciona rolagem se houver muitas notas */
 }
 
+/* Notas */
 .note {
-  background-color: yellow;
+  background-color: #ffeb3b;
   padding: 10px;
   margin-top: 10px;
   border-radius: 5px;
   cursor: grab;
   position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .note:active {
   cursor: grabbing;
+  transform: scale(0.98);
 }
 
+.note p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Botão de exclusão */
 .delete-btn {
   position: absolute;
   top: 5px;
   right: 5px;
-  background: red;
+  background: #e74c3c;
   color: white;
   border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .tick {
+    width: calc(45% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .tick {
+    width: 100%;
+  }
+
+  .input-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  textarea {
+    width: 100%;
+  }
 }
