@@ -1,0 +1,9 @@
+[MASTER]
+ignore=tests,migrations,docs,discussions
+output-format = text
+
+[REPORTS]
+output-format = text
+
+[MESSAGES CONTROL]
+disable = R0902, R0913, R0914, R0903, C0114, C0115, C0116
