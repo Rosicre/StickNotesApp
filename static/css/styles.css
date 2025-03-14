@@ -1,0 +1,77 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.tick {
+  width: 30%;
+  min-height: 300px;
+  background: #e3e3e3;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+}
+
+.tick h2 {
+  text-align: center;
+}
+
+.note-list {
+  min-height: 200px;
+  padding: 10px;
+}
+
+.note {
+  background-color: yellow;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: grab;
+  position: relative;
+}
+
+.note:active {
+  cursor: grabbing;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

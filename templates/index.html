@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notas Adesivas</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Notas Adesivas</h1>
+
+    <div class="input-container">
+      <textarea id="note-input" placeholder="Digite sua nota..."></textarea>
+      <select id="note-category">
+        <option value="Trabalho">Trabalho</option>
+        <option value="Estudos">Estudos</option>
+        <option value="Pessoal">Pessoal</option>
+      </select>
+      <button id="add-note-btn">Adicionar Nota</button>
+    </div>
+
+    <div class="container">
+      <div class="tick" id="work-notes" data-category="Trabalho">
+        <h2>Trabalho</h2>
+        <div class="note-list"></div>
+      </div>
+      <div class="tick" id="study-notes" data-category="Estudos">
+        <h2>Estudos</h2>
+        <div class="note-list"></div>
+      </div>
+      <div class="tick" id="personal-notes" data-category="Pessoal">
+        <h2>Pessoal</h2>
+        <div class="note-list"></div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

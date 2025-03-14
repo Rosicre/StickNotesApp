@@ -1,0 +1,30 @@
+services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:16.3-bookworm
+    restart: always
+    env_file:
+      - /workspaces/StickNotesApp/.env
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready -h postgresql"
+      interval: 3s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    container_name: notas_adesivas
+    image: dpage/pgadmin4
+    env_file:
+      - /workspaces/StickNotesApp/.env
+    ports:
+      - 15432:80
+    depends_on:
+      - postgresql
+    volumes:
+      - pgadmin:/var/lib/notas_adesivas
+volumes:
+  pgdata:
+  pgadmin:
