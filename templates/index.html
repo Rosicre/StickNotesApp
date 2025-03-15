@@ -10,7 +10,7 @@
     />
   </head>
   <body>
-    <h1>Notas Adesivas</h1>
+    <h1>Notas Adesivas Para Tarefas Diária</h1>
 
     <div class="input-container">
       <textarea id="note-input" placeholder="Digite sua nota..."></textarea>
@@ -18,6 +18,9 @@
         <option value="Trabalho">Trabalho</option>
         <option value="Estudos">Estudos</option>
         <option value="Pessoal">Pessoal</option>
+        <option value="Saúde">Saúde</option>
+        <option value="Finanças">Finanças</option>
+        <option value="Eventos">Eventos</option>
       </select>
       <button id="add-note-btn">Adicionar Nota</button>
     </div>
@@ -33,6 +36,18 @@
       </div>
       <div class="tick" id="personal-notes" data-category="Pessoal">
         <h2>Pessoal</h2>
+        <div class="note-list"></div>
+      </div>
+      <div class="tick" id="saude-notes" data-category="Saúde">
+        <h2>Saúde</h2>
+        <div class="note-list"></div>
+      </div>
+      <div class="tick" id="finance-notes" data-category="Finanças">
+        <h2>Finanças</h2>
+        <div class="note-list"></div>
+      </div>
+      <div class="tick" id="evento-notes" data-category="Eventos">
+        <h2>Eventos</h2>
         <div class="note-list"></div>
       </div>
     </div>
