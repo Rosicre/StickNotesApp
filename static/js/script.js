@@ -48,6 +48,7 @@ function loadNotes() {
         const div = document.createElement("div");
         div.classList.add("note");
         div.setAttribute("data-id", note.id);
+        div.style.backgroundColor = getCategoryColor(note.category); // Definir a cor de fundo da nota
         div.innerHTML = `
           <p>${note.content}</p>
           <button class="delete-btn" onclick="deleteNote(${note.id})">X</button>
@@ -114,4 +115,18 @@ function activateDragDrop() {
         .catch((error) => console.error("Erro ao mover nota:", error));
     });
   });
+}
+
+function getCategoryColor(category) {
+  const categoryColors = {
+    Urgente: "#f44336", // Vermelho para urgente
+    Trabalho: "#ffeb3b", // Amarelo para trabalho
+    Pessoal: "#4caf50", // Verde para pessoal
+    Estudos: "#2196f3", // Azul para estudos
+    Saúde: "#D8BFD8", // Lilas para saúde
+    Finanças: "#ff9800", // Laranja para finanças
+    Eventos: "#FF6347", // Vermelho para eventos
+  };
+
+  return categoryColors[category] || "#f0f0f0"; // Cor padrão (cinza claro)
 }
