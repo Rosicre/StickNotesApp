@@ -1,7 +1,8 @@
 /* Estilo geral */
+/* Estilo geral */
 body {
-  font-family: "Arial", sans-serif;
-  background-color: #f9f9f9;
+  font-family: "Architects Daughter", cursive;
+  background-color: #d6a77a; /* Cor de fundo marrom claro */
   color: #333;
   text-align: center;
   margin: 0;
@@ -9,9 +10,13 @@ body {
 }
 
 h1 {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 20px;
+  font-size: 2.5rem; /* Tamanho da fonte maior */
+  color: #534829; /* Cor azul, você pode escolher outra cor */
+  font-weight: bold; /* Deixa o texto mais destacado */
+  margin-bottom: 20px; /* Aumenta o espaço abaixo do título */
+  letter-spacing: 2px; /* Aumenta o espaçamento entre as letras */
+  font-family: "Architects Daughter", cursive; /* Aplique uma fonte diferente, se preferir */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra no texto */
 }
 
 /* Container de entrada */
@@ -173,4 +178,42 @@ button:active {
   textarea {
     width: 100%;
   }
+}
+
+/* Notas */
+.note {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.note:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+.note p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Cores de fundo baseadas nas categorias */
+.note[data-category="Urgente"] {
+  background-color: #f44336; /* Vermelho */
+}
+
+.note[data-category="Trabalho"] {
+  background-color: #ffeb3b; /* Amarelo */
+}
+
+.note[data-category="Pessoal"] {
+  background-color: #4caf50; /* Verde */
+}
+
+.note[data-category="Estudos"] {
+  background-color: #2196f3; /* Azul */
 }
