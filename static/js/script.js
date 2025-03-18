@@ -1,132 +1,122 @@
 document.addEventListener("DOMContentLoaded", function () {
-  loadNotes();
+  const noteInput = document.getElementById("note-input");
+  const noteCategory = document.getElementById("note-category");
+  const addNoteBtn = document.getElementById("add-note-btn");
 
-  document
-    .getElementById("add-note-btn")
-    .addEventListener("click", function () {
-      const noteContent = document.getElementById("note-input").value.trim();
-      const category = document.getElementById("note-category").value;
+  // Retorna a cor padrão da categoria
+  function getCategoryColor(category) {
+    return (
+      {
+        Trabalho: "#ffeb3b",
+        Pessoal: "#4caf50",
+        Estudos: "#2196f3",
+        Saúde: "#f44336",
+        Finanças: "#ff9800",
+        Eventos: "#9c27b0",
+      }[category] || "#ffffff"
+    );
+  }
 
-      if (noteContent === "") {
-        alert("Digite uma nota antes de adicionar!");
-        return;
-      }
+  // Função para buscar as notas do servidor
+  function fetchNotes() {
+    fetch("/get_notes")
+      .then((response) => response.json())
+      .then((notes) => {
+        document
+          .querySelectorAll(".note-list")
+          .forEach((list) => (list.innerHTML = ""));
 
-      fetch("/add_note", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: noteContent, category }),
-      })
-        .then((response) => response.json().catch(() => response.text())) // Captura erro de JSON
-        .then((result) => {
-          if (result.error) {
-            console.error("Erro:", result.message);
-            alert("Erro ao adicionar nota: " + result.message);
-          } else {
-            document.getElementById("note-input").value = "";
-            loadNotes();
+        notes.forEach((note) => {
+          const noteElement = document.createElement("div");
+          noteElement.classList.add("note");
+          noteElement.style.backgroundColor =
+            note.color || getCategoryColor(note.category); // Usa a cor da categoria se não tiver cor salva
+
+          noteElement.innerHTML = `
+            <p>${note.content}</p>
+            <p class="timestamp">Criado em: ${new Date(
+              note.created_at
+            ).toLocaleString()}</p>
+            <button class="edit-btn" data-id="${note.id}" data-category="${
+            note.category
+          }" data-color="${note.color}" data-content="${
+            note.content
+          }">Editar</button>
+            <button class="delete-btn" data-id="${note.id}">Excluir</button>
+          `;
+
+          const categoryContainer = document.querySelector(
+            `[data-category="${note.category}"] .note-list`
+          );
+          if (categoryContainer) {
+            categoryContainer.appendChild(noteElement);
           }
-        })
-        .catch((error) => console.error("Erro ao adicionar nota:", error));
-    });
-});
+        });
 
-function loadNotes() {
-  fetch("/get_notes")
-    .then((response) => response.json().catch(() => response.text())) // Captura erro de JSON
-    .then((notes) => {
-      if (notes.error) {
-        console.error("Erro:", notes.message);
-        return;
-      }
+        addEventListeners();
+      })
+      .catch((error) => console.error("Erro ao buscar notas:", error));
+  }
 
-      document
-        .querySelectorAll(".note-list")
-        .forEach((list) => (list.innerHTML = ""));
+  // Adiciona eventos para edição e exclusão
+  function addEventListeners() {
+    document.querySelectorAll(".edit-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const noteId = this.dataset.id;
+        const category = this.dataset.category;
+        const currentColor = this.dataset.color || getCategoryColor(category);
+        const currentContent = this.dataset.content;
 
-      notes.forEach((note) => {
-        const div = document.createElement("div");
-        div.classList.add("note");
-        div.setAttribute("data-id", note.id);
-        div.style.backgroundColor = getCategoryColor(note.category); // Definir a cor de fundo da nota
-        div.innerHTML = `
-          <p>${note.content}</p>
-          <button class="delete-btn" onclick="deleteNote(${note.id})">X</button>
-        `;
+        const newContent = prompt("Edite sua nota:", currentContent);
 
-        div.draggable = true;
-        div.addEventListener("dragstart", dragStart);
-
-        const categoryContainer = document.querySelector(
-          `[data-category="${note.category}"] .note-list`
-        );
-        if (categoryContainer) {
-          categoryContainer.appendChild(div);
+        if (newContent !== null && newContent.trim() !== "") {
+          fetch(`/edit_note/${noteId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: newContent, color: currentColor }),
+          })
+            .then((response) => response.json())
+            .then(() => fetchNotes())
+            .catch((error) => console.error("Erro ao editar nota:", error));
         }
       });
-
-      activateDragDrop();
-    })
-    .catch((error) => console.error("Erro ao carregar notas:", error));
-}
-
-function deleteNote(id) {
-  fetch(`/delete_note/${id}`, { method: "DELETE" })
-    .then((response) => response.json().catch(() => response.text())) // Captura erro de JSON
-    .then((result) => {
-      if (result.error) {
-        console.error("Erro:", result.message);
-        alert("Erro ao excluir nota: " + result.message);
-      } else {
-        loadNotes();
-      }
-    })
-    .catch((error) => console.error("Erro ao excluir nota:", error));
-}
-
-function dragStart(event) {
-  event.dataTransfer.setData("text/plain", event.target.dataset.id);
-}
-
-function activateDragDrop() {
-  document.querySelectorAll(".note-list").forEach((area) => {
-    area.addEventListener("dragover", (event) => event.preventDefault());
-    area.addEventListener("drop", (event) => {
-      event.preventDefault();
-      const noteId = event.dataTransfer.getData("text/plain");
-      const newCategory = event.target
-        .closest(".tick")
-        .getAttribute("data-category");
-
-      fetch(`/move_note/${noteId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ category: newCategory }),
-      })
-        .then((response) => response.json().catch(() => response.text())) // Captura erro de JSON
-        .then((result) => {
-          if (result.error) {
-            console.error("Erro:", result.message);
-            alert("Erro ao mover nota: " + result.message);
-          } else {
-            loadNotes();
-          }
-        })
-        .catch((error) => console.error("Erro ao mover nota:", error));
     });
+
+    document.querySelectorAll(".delete-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const noteId = this.dataset.id;
+
+        fetch(`/delete_note/${noteId}`, { method: "DELETE" })
+          .then((response) => response.json())
+          .then(() => fetchNotes())
+          .catch((error) => console.error("Erro ao excluir nota:", error));
+      });
+    });
+  }
+
+  // Adiciona uma nova nota com a cor da categoria
+  addNoteBtn.addEventListener("click", function () {
+    const content = noteInput.value.trim();
+    const category = noteCategory.value;
+    const color = getCategoryColor(category);
+
+    if (content === "") {
+      alert("Digite uma nota!");
+      return;
+    }
+
+    fetch("/add_note", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content, category, color }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        noteInput.value = "";
+        fetchNotes();
+      })
+      .catch((error) => console.error("Erro ao adicionar nota:", error));
   });
-}
 
-function getCategoryColor(category) {
-  const categoryColors = {
-    Urgente: "#f44336", // Vermelho para urgente
-    Trabalho: "#ffeb3b", // Amarelo para trabalho
-    Pessoal: "#4caf50", // Verde para pessoal
-    Estudos: "#2196f3", // Azul para estudos
-    Saúde: "#D8BFD8", // Lilas para saúde
-    Finanças: "#ff9800", // Laranja para finanças
-    Eventos: "#FF6347", // Vermelho para eventos
-  };
-
-  return categoryColors[category] || "#f0f0f0"; // Cor padrão (cinza claro)
-}
+  fetchNotes();
+});

@@ -10,42 +10,10 @@
     />
   </head>
   <body>
-    <h1>Notas e Tarefas</h1>
+    <h1>Notas Adesivas Para Tarefas Diária</h1>
 
     <div class="input-container">
       <textarea id="note-input" placeholder="Digite sua nota..."></textarea>
-      <div class="color-picker">
-        <button
-          class="color-option"
-          style="background-color: #ffeb3b"
-          data-color="#c2ff3d"
-        ></button>
-        <button
-          class="color-option"
-          style="background-color: #2196f3"
-          data-color="#ff3de8"
-        ></button>
-        <button
-          class="color-option"
-          style="background-color: #4caf50"
-          data-color="#3dc2ff"
-        ></button>
-        <button
-          class="color-option"
-          style="background-color: #f44336"
-          data-color="#04e022"
-        ></button>
-        <button
-          class="color-option"
-          style="background-color: #ff9800"
-          data-color="#bc83e6"
-        ></button>
-        <button
-          class="color-option"
-          style="background-color: #9c27b0"
-          data-color="#ebb328"
-        ></button>
-      </div>
       <select id="note-category">
         <option value="Trabalho">Trabalho</option>
         <option value="Estudos">Estudos</option>
@@ -54,31 +22,63 @@
         <option value="Finanças">Finanças</option>
         <option value="Eventos">Eventos</option>
       </select>
+      <div class="color-picker">
+        <button
+          class="color-option"
+          data-color="#ffeb3b"
+          onclick="setColor('#ffeb3b')"
+        ></button>
+        <button
+          class="color-option"
+          data-color="#2196f3"
+          onclick="setColor('#2196f3')"
+        ></button>
+        <button
+          class="color-option"
+          data-color="#4caf50"
+          onclick="setColor('#4caf50')"
+        ></button>
+        <button
+          class="color-option"
+          data-color="#D8BFD8"
+          onclick="setColor('#D8BFD8')"
+        ></button>
+        <button
+          class="color-option"
+          data-color="#ff9800"
+          onclick="setColor('#ff9800')"
+        ></button>
+        <button
+          class="color-option"
+          data-color="#FF6347"
+          onclick="setColor('#FF6347')"
+        ></button>
+      </div>
       <button id="add-note-btn">Adicionar Nota</button>
     </div>
 
     <div class="container">
-      <div class="tick" data-category="Trabalho">
+      <div class="tick" id="work-notes" data-category="Trabalho">
         <h2>Trabalho</h2>
         <div class="note-list"></div>
       </div>
-      <div class="tick" data-category="Estudos">
+      <div class="tick" id="study-notes" data-category="Estudos">
         <h2>Estudos</h2>
         <div class="note-list"></div>
       </div>
-      <div class="tick" data-category="Pessoal">
+      <div class="tick" id="personal-notes" data-category="Pessoal">
         <h2>Pessoal</h2>
         <div class="note-list"></div>
       </div>
-      <div class="tick" data-category="Saúde">
+      <div class="tick" id="saude-notes" data-category="Saúde">
         <h2>Saúde</h2>
         <div class="note-list"></div>
       </div>
-      <div class="tick" data-category="Finanças">
+      <div class="tick" id="finance-notes" data-category="Finanças">
         <h2>Finanças</h2>
         <div class="note-list"></div>
       </div>
-      <div class="tick" data-category="Eventos">
+      <div class="tick" id="evento-notes" data-category="Eventos">
         <h2>Eventos</h2>
         <div class="note-list"></div>
       </div>

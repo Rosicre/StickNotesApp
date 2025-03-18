@@ -1,62 +1,52 @@
-/* Estilo geral */
-/* Estilo geral */
+/* ----- Estilos Gerais ----- */
 body {
-  font-family: "Architects Daughter", cursive;
+  font-family: "Architects Daughter", cursive, sans-serif;
   background-color: #d6a77a; /* Cor de fundo marrom claro */
   color: #333;
   text-align: center;
   margin: 0;
-  padding: 20px;
+  padding: 60px 15px; /* Reduzi para melhor adaptação em telas menores */
 }
 
+/* ----- Títulos ----- */
 h1 {
-  font-size: 2.5rem; /* Tamanho da fonte maior */
-  color: #534829; /* Cor azul, você pode escolher outra cor */
-  font-weight: bold; /* Deixa o texto mais destacado */
-  margin-bottom: 20px; /* Aumenta o espaço abaixo do título */
-  letter-spacing: 2px; /* Aumenta o espaçamento entre as letras */
-  font-family: "Architects Daughter", cursive; /* Aplique uma fonte diferente, se preferir */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra no texto */
+  font-size: 2.5rem;
+  color: #534829;
+  font-weight: bold;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Container de entrada */
+/* ----- Container de Entrada ----- */
 .input-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 30px;
 }
 
-textarea {
+textarea,
+select {
   width: 300px;
   height: 80px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  resize: none;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-textarea:focus {
-  border-color: #28a745;
-  outline: none;
-}
-
-select {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
-}
-
+textarea:focus,
 select:focus {
   border-color: #28a745;
   outline: none;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
+/* ----- Botão ----- */
 button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -72,21 +62,26 @@ button:hover {
   background-color: #218838;
 }
 
+button:focus {
+  outline: 3px solid rgba(40, 167, 69, 0.5);
+}
+
 button:active {
   background-color: #1e7e34;
 }
 
-/* Container principal */
+/* ----- Container Principal ----- */
 .container {
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap; /* Permite que os cards se ajustem em telas menores */
+  flex-wrap: wrap;
 }
 
+/* ----- Bloco de Notas ----- */
 .tick {
-  width: calc(30% - 20px);
-  min-height: 300px;
+  width: calc(18% - 20px);
+  min-height: 200px;
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -108,12 +103,12 @@ button:active {
 }
 
 .note-list {
-  min-height: 200px;
-  padding: 10px;
-  overflow-y: auto; /* Adiciona rolagem se houver muitas notas */
+  min-height: 150px;
+  padding: 15px;
+  overflow-y: auto;
 }
 
-/* Notas */
+/* ----- Notas ----- */
 .note {
   background-color: #ffeb3b;
   padding: 10px;
@@ -130,12 +125,7 @@ button:active {
   transform: scale(0.98);
 }
 
-.note p {
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Botão de exclusão */
+/* ----- Botão de Exclusão ----- */
 .delete-btn {
   position: absolute;
   top: 5px;
@@ -151,14 +141,25 @@ button:active {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .delete-btn:hover {
   background: #c0392b;
 }
 
-/* Responsividade */
+.delete-btn:focus {
+  outline: 3px solid rgba(231, 76, 60, 0.5);
+}
+
+/* ----- Timestamp ----- */
+.timestamp {
+  font-size: 0.8rem;
+  color: #ecdfdf;
+  margin-top: 10px;
+}
+
+/* ----- Responsividade ----- */
 @media (max-width: 1200px) {
   .tick {
     width: calc(45% - 20px);
@@ -180,40 +181,79 @@ button:active {
   }
 }
 
-/* Notas */
-.note {
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: grab;
-  position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.note:active {
-  cursor: grabbing;
-  transform: scale(0.98);
-}
-
-.note p {
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Cores de fundo baseadas nas categorias */
+/* ----- Cores por Categoria ----- */
 .note[data-category="Urgente"] {
-  background-color: #f44336; /* Vermelho */
+  background-color: #f44336;
 }
 
 .note[data-category="Trabalho"] {
-  background-color: #ffeb3b; /* Amarelo */
+  background-color: #ffeb3b;
 }
 
 .note[data-category="Pessoal"] {
-  background-color: #4caf50; /* Verde */
+  background-color: #4caf50;
 }
 
 .note[data-category="Estudos"] {
-  background-color: #2196f3; /* Azul */
+  background-color: #2196f3;
+}
+
+/* ----- Seleção de Cor ----- */
+.color-picker {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.color-option:active {
+  transform: scale(0.95);
+}
+
+/* Destacar cor selecionada */
+.color-option.selected {
+  border: 2px solid #28a745;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ----- Botão de Edição ----- */
+.edit-btn {
+  position: absolute;
+  top: 5px;
+  right: 40px; /* Aumenta o valor para afastar mais do botão de exclusão */
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px; /* Reduzindo o tamanho */
+  height: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: #2980b9;
+}
+
+.edit-btn:focus {
+  outline: 3px solid rgba(52, 152, 219, 0.5);
 }
